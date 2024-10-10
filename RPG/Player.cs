@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG {
 
-    // I, Braeden, will work on this :D
     class Player {
-
-        // Player attributes. Make sure to override toString() so we can use it as a summrary method. 
 
         private string name;
         private int hp;
@@ -37,10 +34,11 @@ namespace RPG {
         public int HP {
             get => hp;
             set {
+                hp = value;
                 if (hp <= 0) {
                     // GAME OVER
-                } else {
-                    hp = value;
+                    Console.WriteLine("Game Over! Your HP has reached 0.");
+                    Environment.Exit(0);
                 }
             }
         }

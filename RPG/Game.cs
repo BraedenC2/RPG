@@ -10,12 +10,10 @@ namespace RPG {
         private static Random random = new Random();
         private static Player? player;
         private static Weapon? weapon;
-        private static Armor? armor;    
+        private static Armor? armor;
+        private static Map room1;
 
         private static void CreatePlayer() {
-            // User will give a name to their character
-            // These are good names!! The player can have more than 1 weapon/armor!
-
 
             Console.WriteLine("""
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,7 +28,7 @@ namespace RPG {
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
                 """);
-           
+
             int randomDeath = random.Next(0, 10);
             string? userName = Console.ReadLine();
             if (string.IsNullOrEmpty(userName)) {
@@ -55,8 +53,8 @@ namespace RPG {
                 armor = new Armor($"{userName}'s sleepy clothes", "Pajamas", 1, 3, 'c', "You feel very comfortable in this 'armor'. \nNot much protection, but at least it's not a birthday suit.");
 
                 player = new Player(
-                    userName, 
-                    random.Next(1, 100),
+                    userName,
+                    100,
                     weapon,
                     armor);
             }
@@ -75,7 +73,7 @@ namespace RPG {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 press any key to continue...
 ");
-            
+
 
             /*
              Program will assign that name to the Player class,
@@ -94,10 +92,7 @@ press any key to continue...
             ObtainMSG($"{weapon.Name}", 'c');
 
             PlayerRelease();
-            // Reading data from a CSV file to generate the levels
-            // We can write data too (stretch goal) to csv (the same file) to create saves
-            // Right now we're focusing on not random map generation, but currently, the game itself.
-            // Premade maps are okay. 
+
 
         }
 
@@ -131,6 +126,93 @@ press any key to continue...
             MainMenu();
         }
 
+        private static void Level1() {
+            Console.Clear();
+
+            Console.WriteLine("""
+                     ______
+                  ,-' ;  ! `-.
+                 / :  !  :  . \
+                |_ ;   __:  ;  |
+                )| .  :)(.  !  |
+                |"    (##)  _  |
+                |  :  ;`'  (_) (
+                |  :  :  .     |
+                )_ !  ,  ;  ;  |
+                || .  .  :  :  |
+                |" .  |  :  .  |
+                |mt-2_;----.___|
+
+                press any key to open the door⠀⠀
+                """);
+            Console.ReadKey();
+            Console.Clear();
+
+            Console.WriteLine($"""
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                      With a low, grinding creak, the massive door 
+                      slowly swings open, its ancient hinges groaning 
+                      under the weight of centuries. Cold air rushes 
+                      out from the darkness beyond, carrying with it 
+                      the faint scent of damp stone and forgotten secrets.
+
+                      You step forward, and the air grows heavy around 
+                      you, as if the very walls of this place are watching 
+                      your every move. The chamber before you is vast, 
+                      its ceiling lost in shadow, and the only sound 
+                      that greets you is the soft, steady drip of water 
+                      echoing through the endless void.
+
+                      The door shuts behind you with a thundering boom, 
+                      sealing you within. There is no turning back now, 
+                      {player.Name}. What lies ahead may be more than you 
+                      bargained for... or exactly what you were meant to 
+                      find.
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                press any key to continue...
+                """);
+            Console.ReadKey();
+            Console.Clear();
+            room1 = new Map();
+            int action = 0;
+            do {
+                try {
+                    Console.WriteLine($"""
+                What will you do??
+                Options:
+                
+                [1] Run
+                [2] Fight {room1.GetMonster()?.Name ?? "no monster"}
+                """);
+                    action = int.Parse(Console.ReadLine());
+                }
+                catch (Exception e) {
+                    Console.WriteLine("Must be a valid choice");
+                }
+                
+            } while (action <= 0 || action >= 3);
+            Action(action);
+
+        }
+
+        private static void Action(int action) {
+            switch (action) {
+                case 1:
+                    int punishment = random.Next(1, 50);
+                    Console.WriteLine($"As you run to the door, {room1.GetMonster().Name} does {punishment} damage to you.");
+                    Console.WriteLine($"You hear {room1.GetMonster().Name} laugh at your cowardness.");
+                    player.HP -= punishment;
+                    if (player.HP <= 0) {
+                        Console.WriteLine("How sad... You've died.");
+                        Environment.Exit(0);
+                    }
+                    Console.WriteLine($"You, {player.Name} have {player.HP} left.");
+                    break;
+                case 2:
+
+                    break;
+            }
+        }
         private static void MainMenu() {
             Console.Clear();
             byte userSelection = 0;
@@ -155,7 +237,7 @@ press any key to continue...
             }
 
             switch (userSelection) {
-                case 1: // TODO: Start the Adventure
+                case 1: Level1();
                     break;
                 case 2: ControlScreen();
                     break;
@@ -266,6 +348,8 @@ press any key to continue...
                    ---------
                    [Y] - Approve the action
                    [N] - Disapprove the action
+
+                   (Other unique prompts will prompt you with available actions)
 
                    Inventory:
                    ----------

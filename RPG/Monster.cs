@@ -8,24 +8,33 @@ namespace RPG
         private bool flying;
         private string name;
         private string description;
+        private string species;
         private int health;
-        private Armor armor;
+        private int damage;
+        
 
-        public Monster(string name, string description, int health, bool flying, Armor armor)
+        public Monster(string name, string description, int health, bool flying, int damage, string species, string[] catchphrases)
         {
             Name = name;
             Description = description;
             Health = health;
             Flying = flying;
+            this.damage = damage;
+            this.species = species;
+            Catchphrases = catchphrases;
 
         }
-
-        // Test
-
         public override string ToString()
         {
-            return $"{name} has {health} left";
+            if (flying) return $"{Name} has {Health}. {Name} can do {Damage} damage and can fly.";
+            else return $"{Name} has {Health}. {Name} can do {Damage} damage.";
         }
+
+        public string GetRandomCatchphrase() {
+            return Catchphrases[new Random().Next(Catchphrases.Length)];
+        }
+
+        public string[] Catchphrases { get; }
 
         public string Name
         {
@@ -51,6 +60,10 @@ namespace RPG
                 description = value;
             }
         }
+
+        public string Species {
+            get => species;
+        }
         public int Health
         {
             get { return health; }
@@ -67,10 +80,9 @@ namespace RPG
             get { return flying; }
             set { flying = value; }
         }
-        public Armor Armor
-        {
-            get { return armor; }
-            set { armor = value; }
+
+        public int Damage {
+            get => damage;
         }
     }
 
