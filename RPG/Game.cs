@@ -418,6 +418,63 @@ press any key to continue...
             Console.ReadKey();
             Console.Clear();
         }
+        public static double CheckRarity(Weapon weapon)
+        {
+            if (weapon.Description == "leginary")
+            {
+                return .75;
+            }
+            else if(weapon.Description=="rare") {
+                return .5;
+            }
+            else if(weapon.Description=="common")
+            {
+                return .25;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        public static void MakeinganAttack(Weapon weapon, Armor arms) {
+        }
+
+        public static int Battle( ref Monster Mod,ref  Player ThePlayer)
+        {
+            Random random = new Random();
+            //testing to see who gose first. will just be a coin flip
+            int turn = random.Next(2);
+            while (true)
+            {
+                if (turn == 0)
+                {
+                    //monster turn
+                    int Attack = Mod.Weapon.Damage;
+
+                    
+                    if (ThePlayer.HP == 0 || ThePlayer.HP < 0)
+                    {
+                        Console.WriteLine($"You have been slane by {ThePlayer.Name}. Now deleting system32 ");
+                        return -1;
+                    }
+                }
+                else
+                {
+                    //players turn
+                    if (Mod.Health == 0 || Mod.Health < 0)
+                    {
+                        Console.WriteLine($"you have slane {Mod.Name}. ");
+                        return 0;
+                    }
+
+                }
+                
+            }
+            return 0;
+            return 0;
+
+
+        }
 
         private static void Main() {
 

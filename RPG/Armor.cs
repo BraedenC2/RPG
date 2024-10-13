@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,9 @@ namespace RPG {
 
         }
 
+        //this will have a deduction off an attack. such legenary wil be 75%
+        //rare 50%
+        //Common 25%
         public string Description {
             get => description ;
             set => description = value ;
@@ -64,6 +68,7 @@ namespace RPG {
             set {
                 if (value <= 0) {
                     // Destory armor
+                    durability = 0;
                 } else { 
                     durability = value;
                 }

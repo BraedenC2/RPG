@@ -10,13 +10,16 @@ namespace RPG
         private string description;
         private int health;
         private Armor armor;
+        private Weapon weapon;
 
-        public Monster(string name, string description, int health, bool flying, Armor armor)
+        public Monster(string name, string description, int health, bool flying, Armor armor,Weapon weapon)
         {
             Name = name;
             Description = description;
             Health = health;
             Flying = flying;
+            Armor = armor;
+            Weapon = weapon;
 
         }
 
@@ -71,6 +74,11 @@ namespace RPG
         {
             get { return armor; }
             set { armor = value; }
+        }
+        public Weapon Weapon
+        {
+            get => weapon;
+            set => weapon = value;
         }
     }
 
