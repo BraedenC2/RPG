@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 
 namespace RPG {
-    class Map {
+    public class Map {
         private Monster monster;
         private Weapon weapon;
         private string room;
