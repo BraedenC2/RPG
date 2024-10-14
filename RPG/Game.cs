@@ -503,6 +503,72 @@ press any key to continue...
             Console.Clear();
         }
 
+        public static int CheckRarity(Player player) {
+            if (player.Weapon.Rarity == 'l') {
+                return 5;
+            } else if (player.Weapon.Rarity == 'r') {
+                return 3;
+            } else if (player.Weapon.Rarity == 'c') {
+                return 2;
+            } else {
+                return 0;
+            }
+        }
+
+        public static void MakingAnAttack(Monster monster, Player player, Random random, int turn) {
+            int attempt = random.Next(100);
+            //this 
+            if (attempt < 75) {
+                if (turn == 0) {
+                    //monster
+                    int baseAttack = monster.Damage;
+                    int subtracted = CheckRarity(player);
+                    baseAttack = baseAttack - subtracted;
+                    player.Armor.Durability--;
+
+                    player.HP = player.HP - baseAttack;
+
+
+                } else {
+
+                    //attacker
+                    int choice;
+                    Console.WriteLine("Do you want to swing the wepon?\n1(yes)\n2(no)");
+
+
+                }
+            } else {
+                Console.WriteLine(" The attack missed. ");
+
+            }
+
+        }
+
+        public static void Battle(ref Monster monster, ref Player player) {
+            Random random = new Random();
+            //testing to see who gose first. will just be a coin flip
+            int turn = random.Next(2);
+            while (true) {
+                if (turn == 0) {
+                    //monster turn
+
+
+                    if (player.HP == 0 || player.HP < 0) {
+                        Console.WriteLine($"You have been slane by {player.Name}. Now deleting system32 ");
+
+                    }
+                } else {
+                    //players turn
+                    if (monster.Health == 0 || monster.Health < 0) {
+                        Console.WriteLine($"you have slane {monster.Name}. ");
+
+                    }
+
+                }
+
+            }
+        }
+
         private static void Main() {
 
             PreStartGame();

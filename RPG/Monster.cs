@@ -2,7 +2,7 @@
 
 namespace RPG
 {
-    class Monster
+    public class Monster
     {
 
         private bool flying;
