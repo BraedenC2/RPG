@@ -69,11 +69,7 @@ namespace RPG {
         public int Durability {
             get => durability;
             set {
-                if (value <= 0) {
-                    // Remove weapon
-                } else {
-                    durability = value;
-                }
+                durability = value;
             }
         }
     

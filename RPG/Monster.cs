@@ -69,10 +69,7 @@ namespace RPG
             get { return health; }
             set
             {
-                if (value >= 0)
-                {
-                    health = value;
-                }
+                health = value;
             }
         }
         public bool Flying

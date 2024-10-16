@@ -122,11 +122,11 @@ press any key to continue...
             Console.ReadKey();
             Console.Clear();
 
-            TitleScreen();
+            //TitleScreen();
             MainMenu();
         }
 
-        private static void Level1() {
+        private static void StartingLevel() {
             Console.Clear();
 
             Console.WriteLine("""
@@ -172,26 +172,35 @@ press any key to continue...
                 press any key to continue...
                 """);
             Console.ReadKey();
+            Level1();
+        }
+        private static void Level1() {
             Console.Clear();
             room1 = new Map();
             int action = 0;
-            do {
-                try {
-                    Console.WriteLine($"""
+            if (room1.GetMonster() == null) {
+                Console.WriteLine("No monster is here");
+                Thread.Sleep(2000);
+                Level1();
+            } else {
+                do {
+                    try {
+                        Console.WriteLine($"""
                 What will you do??
                 Options:
                 
                 [1] Run
                 [2] Fight {room1.GetMonster()?.Name ?? "no monster"}
                 """);
-                    action = int.Parse(Console.ReadLine());
-                }
-                catch (Exception e) {
-                    Console.WriteLine("Must be a valid choice");
-                }
-                
-            } while (action <= 0 || action >= 3);
-            Action(action);
+                        action = int.Parse(Console.ReadLine());
+                    } catch (Exception e) {
+                        Console.WriteLine("Must be a valid choice");
+                    }
+
+                } while (action <= 0 || action >= 3);
+                Action(action);
+            }
+            
 
         }
 
@@ -207,8 +216,10 @@ press any key to continue...
                         Environment.Exit(0);
                     }
                     Console.WriteLine($"You, {player.Name} have {player.HP} left.");
+                    Level1();
                     break;
                 case 2:
+                    Battle();
 
                     break;
             }
@@ -237,7 +248,7 @@ press any key to continue...
             }
 
             switch (userSelection) {
-                case 1: Level1();
+                case 1: StartingLevel();
                     break;
                 case 2: ControlScreen();
                     break;
@@ -515,57 +526,120 @@ press any key to continue...
             }
         }
 
-        public static void MakingAnAttack(Monster monster, Player player, Random random, int turn) {
-            int attempt = random.Next(100);
-            //this 
-            if (attempt < 75) {
+        public static void Battle() {
+            Console.Clear();
+            Random random = new Random();
+            // Making this easier to read...
+            Monster monster = room1.GetMonster();
+            // 0 for monster, 1 for player
+            int turn = random.Next(2); 
+
+            Console.WriteLine($"A wild {monster.Name} appears!");
+
+            while (true) {
+                Console.WriteLine($"\n{player.Name} HP: {player.HP} | {monster.Name} HP: {monster.Health}");
+
                 if (turn == 0) {
-                    //monster
-                    int baseAttack = monster.Damage;
-                    int subtracted = CheckRarity(player);
-                    baseAttack = baseAttack - subtracted;
-                    player.Armor.Durability--;
+                    // Monster's turn
+                    Console.WriteLine($"\n{monster.Name}'s turn!");
+                    MakingAnAttack(monster, player, random, turn);
 
-                    player.HP = player.HP - baseAttack;
+                    if (player.HP <= 0) {
+                        Console.WriteLine($"You have been slain by {monster.Name}.");
+                        Environment.Exit(0);
+                    }
 
-
+                    // switching to player's turn... if alive
+                    turn = 1;
                 } else {
+                    // Player's turn
+                    Console.WriteLine("\nYour turn!");
+                    MakingAnAttack(monster, player, random, turn);
 
-                    //attacker
-                    int choice;
-                    Console.WriteLine("Do you want to swing the wepon?\n1(yes)\n2(no)");
-
-
+                    if (monster.Health <= 0) {
+                        Console.WriteLine($"You have slain {monster.Name}!");
+                        Console.WriteLine("\n*You go to the next room*");
+                        break;
+                    }
+                    // Switch to monster's turn
+                    turn = 0; 
                 }
-            } else {
-                Console.WriteLine(" The attack missed. ");
-
             }
 
+            Console.WriteLine("The battle is over. Press any key to continue...");
+            Console.ReadKey();
+            Level1();
         }
 
-        public static void Battle(ref Monster monster, ref Player player) {
-            Random random = new Random();
-            //testing to see who gose first. will just be a coin flip
-            int turn = random.Next(2);
-            while (true) {
-                if (turn == 0) {
-                    //monster turn
+        public static void MakingAnAttack(Monster monster, Player player, Random random, int turn) {
+            int attempt = random.Next(100);
 
+            if (attempt < 75)
+            {
+                // Monster's turn
+                if (turn == 0)
+                {
 
-                    if (player.HP == 0 || player.HP < 0) {
-                        Console.WriteLine($"You have been slane by {player.Name}. Now deleting system32 ");
-
+                    if (player.Armor.Durability <= 0) {
+                        player.Armor.Durability = 0;
+                        player.Armor.Defense = 0;
                     }
-                } else {
-                    //players turn
-                    if (monster.Health == 0 || monster.Health < 0) {
-                        Console.WriteLine($"you have slane {monster.Name}. ");
+                    Console.WriteLine("ARMOR DURABILITY: " + player.Armor.Durability);
 
+                    int baseAttack = monster.Damage;
+                    int subtracted = player.Armor.Defense;
+                    baseAttack = baseAttack - subtracted;
+                    if (baseAttack < 0) baseAttack = 0;
+                    player.Armor.Durability--;
+
+
+                    player.HP = player.HP - baseAttack;
+                    Console.WriteLine($"{monster.Name} attacks you for {baseAttack} damage!");
+
+                    if (player.HP <= 0) {
+                        player.HP = 0;
+                        Console.WriteLine($"You have died... You put up a good fight. {monster.Name} will remember you.");
+                    }
+                } else // the player's turn
+                  {
+                    Console.WriteLine($"Do you want to swing {player.Weapon.Name}?\n1(yes)\n2(no)");
+                    int choice = 0;
+                    while (true) {
+                        try {
+                            choice = int.Parse(Console.ReadLine());
+                            if (choice == 1 || choice == 2) {
+                                break;
+                            } else {
+                                Console.WriteLine("Invalid choice. Please enter 1 for yes or 2 for no.");
+                            }
+                        } catch (Exception e) {
+                            Console.WriteLine("Invalid input. Please enter a number (1 for yes, 2 for no).");
+                        }
                     }
 
+                    Console.Clear();
+
+
+                    if (choice == 1) {
+                        if (player.Weapon.Durability <= 0) {
+                            player.Weapon.Durability = 0;
+                            player.Weapon.Damage = 1;
+                            Console.WriteLine($"Your {player.Weapon.Name} has broken! You're now attacking with a broken {player.Weapon.Type}.");
+                        }
+                        Console.WriteLine("WEAPON DURABILITY: " + player.Weapon.Durability);
+
+                        int damage = player.Weapon.Damage;
+                        monster.Health -= damage;
+                        player.Weapon.Durability--;
+                        Console.WriteLine($"You hit {monster.Name} for {damage} damage!");
+
+
+                    } else {
+                        Console.WriteLine("You decide not to attack this turn.");
+                    }
                 }
-
+            } else {
+                Console.WriteLine($"{(turn == 0 ? monster.Name : player.Name)} STUMBLED!");
             }
         }
 
