@@ -1,7 +1,14 @@
 Name,Description,Health,Flying?,Species,Catchphrase 1,Catchphrase 2,Catphrase 3,Damage
 Goblin,A fearless-little green man,5,FALSE,Goblinoid,grrr,gee hehe,GAH,1
-Rhaegal,A mighty... reptile,35,TRUE,Dragon,RAWWWRR,RRRAHHH,...,10
-Brian,A programming professor... RUN,1000,FALSE,Professor,F,99/100,Check canvas,1000
-Shrek,He loves onions,35,FALSE,Oger,ONIONSSS!,Ogre you glad to see me?,DONKAH,5
-Jack Sparrow,Rum is his favorite flavor of water,20,FALSE,Pirate,Nice laddie,RUM,arrrg,3
+Rhaegal,A mighty... reptile,35,TRUE,Dragon,RAWWWRR,RRRAHHH,...,20
+Brian,A programming professor... RUN,1000,FALSE,Professor,That won't work...,Perry the Platypus? ,Space Odyssey is the greatest movie.,1000
+Shrek,He loves onions,35,FALSE,Oger,ONIONSSS!,Ogre you glad to see me?,DONKAH,15
+Jack Sparrow,Rum is his favorite flavor of water,30,FALSE,Pirate,Nice laddie,RUM,arrrg,3
 Pikachu,Electric type Pokemon,8,FALSE,Mouse,CHUUU,PIKA PIKA,PI-KAH,4
+Bat,A blind rat that can flies,3,TRUE,Chiroptera,Chi chi chi,screeeech,tsk tsk tsk,3
+Slime,A gooey substance,10,FALSE,Glue,glug glug,glurg glurg,glorg glorg,4
+Zombie,A dead person that came here before you,25,FALSE,Human?,Uhhhhh,RAH,Braainns,6
+Darth Vader,A lord in the Galaxy... How'd he get here?,50,FALSE,Human,Hhhhh...krrr...hhhh...krrr,Turn to the dark side,Pshhhheeeew...vrrrooom,20
+Demon,small cunning creature that wants to fly above your shoulder.,15,TRUE,Devil Spawn,HEHEHEHEHE,HelLo ThERe frIENd!,ehhhhHHHh HAHAHA,10
+Rat,A seeing small creature that cannot fly,6,FALSE,Chiroptera,squeak squeak,squeak,t t t t t,2
+Griffin Peter,"A majestic, mythical creature with the body of a lion, the head of a fat man, and wings of an eagle",20,TRUE,Family Guy,EHheheh...,Birds the word!,CAWWWW,15
