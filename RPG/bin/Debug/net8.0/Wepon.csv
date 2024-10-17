@@ -1,0 +1,6 @@
+name,type,damage,cooldown,durability,rarity,description
+stick,wepon,3,0,2,c,just a breakable stick
+sword,wepon,4,0,4,r ,a sharp pointy thing
+bomb,explosive,20,0,1,l,hehe
+java developer,explosive,1,0,1,c,should have chosen c++
+c++,wepon,50,0,15,l,the best lanugage ever known to man
