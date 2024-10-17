@@ -9,15 +9,18 @@ namespace RPG {
     public class Map {
         private Monster monster;
         private Weapon weapon;
+        private Armor armor;
         private string room;
         private bool hasDoor;
         private static Random random = new Random();
         private List<Monster> possibleMonsters;
         private List<Weapon> possibleWeapons;
+        private List<Armor> possibleArmor;
 
         public Map() {
             LoadMonstersFromFile("monsters.csv");
-            //LoadWeaponsFromFile("weapons.csv");
+            LoadWeaponsFromFile("Wepon.csv");
+            LoadArmorFromFile("Armor.csv");
             GenerateRoom();
         }
 
@@ -42,13 +45,13 @@ namespace RPG {
             }
         }
 
-       /* private void LoadWeaponsFromFile(string fileName) {
+        private void LoadWeaponsFromFile(string fileName) {
             possibleWeapons = new List<Weapon>();
 
             string[] lines = File.ReadAllLines(fileName);
 
             foreach (string line in lines) {
-                string[] parts = line.Split('|');
+                string[] parts = line.Split(',');
                 if (parts.Length == 7) {
                     string name = parts[0];
                     string type = parts[1];
@@ -61,15 +64,41 @@ namespace RPG {
                     possibleWeapons.Add(new Weapon(name, type, damage, coolDown, durability, rarity, description));
                 }
             }
-        }*/
+        }
+        private void LoadArmorFromFile(string fileName)
+        {
+            possibleArmor = new List<Armor>();
 
+            string[] lines = File.ReadAllLines(fileName);
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                if (parts.Length == 7)
+                {
+                    string name = parts[0];
+                    string type = parts[1];
+                    int defense = int.Parse(parts[2]);
+                    
+                    int durability = int.Parse(parts[3]);
+                    char rarity = char.Parse(parts[4]);
+                    string description = parts[5];
+
+                    possibleArmor.Add(new Armor(name, type, defense, durability, rarity, description));
+                }
+            }
+        }
         private void GenerateRoom() {
             if (random.Next(2) == 0 && possibleMonsters.Count > 0) {
                 monster = possibleMonsters[random.Next(possibleMonsters.Count)];
             }
-            /*if (random.Next(2) == 0 && possibleWeapons.Count > 0) {
+            if (random.Next(2) == 0 && possibleWeapons.Count > 0) {
                 weapon = possibleWeapons[random.Next(possibleWeapons.Count)];
-            }*/
+            }
+            if (random.Next(2) == 0 && possibleWeapons.Count > 0)
+            {
+                armor = possibleArmor[random.Next(possibleArmor.Count)];
+            }
             hasDoor = true;
             GenerateRoomDescription();
         }
@@ -96,7 +125,10 @@ namespace RPG {
         public Weapon GetWeapon() {
             return weapon;
         }
-
+        public Armor GetArmor()
+        {
+            return armor;
+        }
         public bool HasDoor() {
             return hasDoor;
         }
