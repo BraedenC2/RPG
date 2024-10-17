@@ -18,9 +18,9 @@ namespace RPG {
         private List<Armor> possibleArmor;
 
         public Map() {
-            LoadMonstersFromFile("monsters.csv");
-            LoadWeaponsFromFile("Wepon.csv");
-            LoadArmorFromFile("Armor.csv");
+            LoadMonstersFromFile(@"monsters.csv");
+            LoadWeaponsFromFile(@"Wepon.csv");
+            LoadArmorFromFile(@"Armor.csv");
             GenerateRoom();
         }
 
@@ -44,14 +44,34 @@ namespace RPG {
                 }
             }
         }
+        private static int GetLineCount(string path)
+        {
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("File not found", path);
+            }
+            int line = 0;
+            using StreamReader reader = new StreamReader(path);
+            while (!reader.EndOfStream)
+            {
+                reader.ReadLine();
+                line++;
+                Console.WriteLine(line);
+            }
 
+            reader.Close();
+            return line;
+        }
         private void LoadWeaponsFromFile(string fileName) {
-            possibleWeapons = new List<Weapon>();
+            int lines = GetLineCount(fileName);
+            possibleWeapons = new List<Weapon>(lines-1);
 
-            string[] lines = File.ReadAllLines(fileName);
-
-            foreach (string line in lines) {
-                string[] parts = line.Split(',');
+            
+            using StreamReader read =new StreamReader(fileName);
+            read.ReadLine();
+            for (int i = 0;i <lines -1;i++) {
+                string Line = read.ReadLine();
+                string[] parts = Line.Split(',');
                 if (parts.Length == 7) {
                     string name = parts[0];
                     string type = parts[1];
@@ -67,12 +87,16 @@ namespace RPG {
         }
         private void LoadArmorFromFile(string fileName)
         {
-            possibleArmor = new List<Armor>();
+            int AmountOfLines = GetLineCount(fileName);
+            possibleArmor = new List<Armor>(AmountOfLines-1);
 
-            string[] lines = File.ReadAllLines(fileName);
-
-            foreach (string line in lines)
+            
+            StreamReader reader =new StreamReader(fileName);
+          
+            reader.ReadLine();
+            for (int i =0;i<AmountOfLines-1;i++)
             {
+                string line = reader.ReadLine();
                 string[] parts = line.Split(',');
                 if (parts.Length == 7)
                 {
