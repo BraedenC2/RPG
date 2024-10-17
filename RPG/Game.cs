@@ -122,7 +122,7 @@ press any key to continue...
             Console.ReadKey();
             Console.Clear();
 
-            //TitleScreen();
+            TitleScreen();
             MainMenu();
         }
 
