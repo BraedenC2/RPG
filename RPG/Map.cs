@@ -47,8 +47,8 @@ namespace RPG {
 
             string[] lines = File.ReadAllLines(fileName);
 
-            foreach (string line in lines) {
-                string[] parts = line.Split('|');
+            for (int i = 1; i <lines.Length; i++) {
+                string[] parts = lines[i].Split(',');
                 if (parts.Length == 7) {
                     string name = parts[0];
                     string type = parts[1];
@@ -67,7 +67,7 @@ namespace RPG {
             if (random.Next(2) == 0 && possibleMonsters.Count > 0) {
                 monster = possibleMonsters[random.Next(possibleMonsters.Count)];
             }
-            if (random.Next(2) == 0 && possibleWeapons.Count > 0) {
+            if (possibleWeapons.Count > 0) {
                 weapon = possibleWeapons[random.Next(possibleWeapons.Count)];
             }
             hasDoor = true;

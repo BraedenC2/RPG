@@ -179,8 +179,8 @@ press any key to continue...
             room1 = new Map();
             int action = 0;
             if (room1.GetMonster() == null) {
-                Console.WriteLine("No monster is here");
-                Thread.Sleep(2000);
+                ObtainMSG(room1.GetWeapon().Name, room1.GetWeapon().Rarity);
+                player.Weapon = room1.GetWeapon();
                 Level1();
             } else {
                 do {
