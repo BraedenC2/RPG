@@ -573,8 +573,15 @@ press any key to continue...
 
         public static void MakingAnAttack(Monster monster, Player player, Random random, int turn) {
             int attempt = random.Next(100);
+            int attemptChance;
 
-            if (attempt < 75)
+            if (monster.Flying) {
+                attemptChance = 50;
+            } else {
+                attemptChance = 75;
+            }
+
+            if (attempt < attemptChance)
             {
                 // Monster's turn
                 if (turn == 0)

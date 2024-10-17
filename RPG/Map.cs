@@ -17,7 +17,7 @@ namespace RPG {
 
         public Map() {
             LoadMonstersFromFile("monsters.csv");
-            //LoadWeaponsFromFile("weapons.csv");
+            LoadWeaponsFromFile("weapons.csv");
             GenerateRoom();
         }
 
@@ -42,7 +42,7 @@ namespace RPG {
             }
         }
 
-       /* private void LoadWeaponsFromFile(string fileName) {
+        private void LoadWeaponsFromFile(string fileName) {
             possibleWeapons = new List<Weapon>();
 
             string[] lines = File.ReadAllLines(fileName);
@@ -61,15 +61,15 @@ namespace RPG {
                     possibleWeapons.Add(new Weapon(name, type, damage, coolDown, durability, rarity, description));
                 }
             }
-        }*/
+        }
 
         private void GenerateRoom() {
             if (random.Next(2) == 0 && possibleMonsters.Count > 0) {
                 monster = possibleMonsters[random.Next(possibleMonsters.Count)];
             }
-            /*if (random.Next(2) == 0 && possibleWeapons.Count > 0) {
+            if (random.Next(2) == 0 && possibleWeapons.Count > 0) {
                 weapon = possibleWeapons[random.Next(possibleWeapons.Count)];
-            }*/
+            }
             hasDoor = true;
             GenerateRoomDescription();
         }
